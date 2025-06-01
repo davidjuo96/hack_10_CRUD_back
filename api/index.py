@@ -17,6 +17,14 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+@app.route("/", methods=["GET"])
+def index():
+    try:
+        db.session.execute("SELECT 1")
+        return jsonify({"message": "Conexión exitosa con la base de datos"})
+    except Exception as e:
+        return jsonify({"error": "Fallo la conexión", "details": str(e)}), 500
+
 @app.route("/users", methods=["GET"])
 def get_users():
     users = User.query.all()
