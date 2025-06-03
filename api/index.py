@@ -8,7 +8,6 @@ from .db import db
 app = Flask(__name__)
 CORS(app)
 
-# Configuración de conexión
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -19,11 +18,7 @@ with app.app_context():
 
 @app.route("/", methods=["GET"])
 def index():
-    try:
-        db.session.execute("SELECT 1")
-        return jsonify({"message": "Conexión exitosa con la base de datos"})
-    except Exception as e:
-        return jsonify({"error": "Fallo la conexión", "details": str(e)}), 500
+    return "Conectado a la base de datos en AWS"
 
 @app.route("/users", methods=["GET"])
 def get_users():
